@@ -1,5 +1,12 @@
 import db from './database';
 
+/**
+ * STRICT INITIAL EXERCISE WHITELIST:
+ * Only the following 9 exercises are seeded.
+ * Arms: Preacher Curls, Skull Crushers, Front Raise, Lateral Raise
+ * Back: Wide Dumbell Row, Close Dumbell row, Shrugs
+ * Legs: RDL, Squats
+ */
 export function seedDatabase(force: boolean = false) {
   const existingTemplates = db.prepare('SELECT COUNT(*) as count FROM workout_templates').get() as { count: number };
   
@@ -26,9 +33,9 @@ export function seedDatabase(force: boolean = false) {
     const insertTemplate = db.prepare(
       'INSERT INTO workout_templates (id, name, description) VALUES (?, ?, ?)'
     );
-    insertTemplate.run(1, 'Arms', 'Targeting Biceps, Triceps, and Forearms with progressive rep overload');
-    insertTemplate.run(2, 'Back', 'Targeting Lats, Upper Back, Rear Delts, and Traps with fixed dumbbells');
-    insertTemplate.run(3, 'Legs', 'Targeting Quads, Hamstrings, Glutes, and Calves');
+    insertTemplate.run(1, 'Arms', 'Preacher Curls, Skull Crushers, Front Raise, Lateral Raise');
+    insertTemplate.run(2, 'Back', 'Wide Dumbell Row, Close Dumbell row, Shrugs');
+    insertTemplate.run(3, 'Legs', 'RDL, Squats');
 
     // 3. Configurable 6-Day Workout Schedule:
     // 1: Arms, 2: Back, 3: Legs, 4: Rest, 5: Arms, 6: Back
@@ -42,35 +49,26 @@ export function seedDatabase(force: boolean = false) {
     insertSchedule.run(5, 'Arms', 1);
     insertSchedule.run(6, 'Back', 2);
 
-    // 4. Exercise Bank
+    // 4. Strict 9 Exercises (Preserving exact requested names)
     const insertExercise = db.prepare(`
       INSERT INTO exercises (id, name, muscle_group, default_weight, target_min_reps, target_max_reps, notes)
       VALUES (?, ?, ?, ?, ?, ?, ?)
     `);
 
-    // Arms exercises
-    insertExercise.run(1, 'Dumbbell Bicep Curl', 'Biceps', 10.0, 8, 12, 'Strict form, full extension at the bottom');
-    insertExercise.run(2, 'Hammer Curl', 'Forearms', 10.0, 8, 12, 'Neutral grip, pause at contraction');
-    insertExercise.run(3, 'Overhead Tricep Extension', 'Triceps', 10.0, 8, 12, 'Keep elbows tucked, full stretch at bottom');
-    insertExercise.run(4, 'Dumbbell Skull Crushers', 'Triceps', 10.0, 8, 12, 'Controlled descent to ears, squeeze triceps');
-    insertExercise.run(5, 'Dumbbell Wrist Curls', 'Forearms', 10.0, 10, 15, 'Forearms rested on bench/knees');
+    // Arms Workout
+    insertExercise.run(1, 'Preacher Curls', 'Biceps', 10.0, 8, 12, 'Arms workout exercise 1');
+    insertExercise.run(2, 'Skull Crushers', 'Triceps', 10.0, 8, 12, 'Arms workout exercise 2');
+    insertExercise.run(3, 'Front Raise', 'Shoulders', 10.0, 8, 12, 'Arms workout exercise 3');
+    insertExercise.run(4, 'Lateral Raise', 'Shoulders', 10.0, 8, 12, 'Arms workout exercise 4');
 
-    // Back exercises
-    insertExercise.run(6, 'One-Arm Dumbbell Row', 'Back', 10.0, 8, 12, 'Pull towards hip, squeeze lat at peak');
-    insertExercise.run(7, 'Bent-Over Dumbbell Row', 'Back', 10.0, 8, 12, '45-degree hinge, pull elbows back');
-    insertExercise.run(8, 'Dumbbell Shrugs', 'Back', 10.0, 10, 15, 'Straight up elevation, 1s hold at peak');
-    insertExercise.run(9, 'Dumbbell Reverse Fly', 'Shoulders', 10.0, 10, 14, 'Rear delt contraction, slight bend in elbows');
-    insertExercise.run(10, 'Dumbbell Pullover', 'Back', 10.0, 8, 12, 'Deep stretch across ribcage');
+    // Back Workout
+    insertExercise.run(5, 'Wide Dumbell Row', 'Back', 10.0, 8, 12, 'Back workout exercise 1');
+    insertExercise.run(6, 'Close Dumbell row', 'Back', 10.0, 8, 12, 'Back workout exercise 2');
+    insertExercise.run(7, 'Shrugs', 'Back', 10.0, 8, 12, 'Back workout exercise 3');
 
-    // Legs exercises
-    insertExercise.run(11, 'Dumbbell Goblet Squat', 'Legs', 10.0, 8, 12, 'Hold dumbbell at chest, break parallel');
-    insertExercise.run(12, 'Dumbbell Romanian Deadlift', 'Legs', 10.0, 8, 12, 'Hinge at hips, keep spine neutral, deep hamstring stretch');
-    insertExercise.run(13, 'Dumbbell Walking Lunges', 'Legs', 10.0, 8, 12, 'Controlled step, knee hovering above floor');
-    insertExercise.run(14, 'Dumbbell Standing Calf Raises', 'Legs', 10.0, 12, 16, 'Full extension on toes with pause at top');
-
-    // Other exercises
-    insertExercise.run(15, 'Dumbbell Lateral Raise', 'Shoulders', 10.0, 10, 15, 'Raise to shoulder level, lead with elbows');
-    insertExercise.run(16, 'Dumbbell Floor Press', 'Chest', 10.0, 8, 12, 'Upper arms touch floor gently before pressing up');
+    // Legs Workout
+    insertExercise.run(8, 'RDL', 'Legs', 10.0, 8, 12, 'Legs workout exercise 1');
+    insertExercise.run(9, 'Squats', 'Legs', 10.0, 8, 12, 'Legs workout exercise 2');
 
     // 5. Template Exercises mapping
     const insertTemplateEx = db.prepare(`
@@ -79,26 +77,21 @@ export function seedDatabase(force: boolean = false) {
     `);
 
     // Arms template (Template 1)
-    insertTemplateEx.run(1, 1, 1, 3); // Bicep Curl
-    insertTemplateEx.run(1, 2, 2, 3); // Hammer Curl
-    insertTemplateEx.run(1, 3, 3, 3); // Overhead Tricep Ext
-    insertTemplateEx.run(1, 4, 4, 3); // Skull Crushers
-    insertTemplateEx.run(1, 5, 5, 3); // Wrist Curls
+    insertTemplateEx.run(1, 1, 1, 3); // Preacher Curls
+    insertTemplateEx.run(1, 2, 2, 3); // Skull Crushers
+    insertTemplateEx.run(1, 3, 3, 3); // Front Raise
+    insertTemplateEx.run(1, 4, 4, 3); // Lateral Raise
 
     // Back template (Template 2)
-    insertTemplateEx.run(2, 6, 1, 3); // One-Arm Row
-    insertTemplateEx.run(2, 7, 2, 3); // Bent-Over Row
-    insertTemplateEx.run(2, 8, 3, 3); // Shrugs
-    insertTemplateEx.run(2, 9, 4, 3); // Reverse Fly
-    insertTemplateEx.run(2, 10, 5, 3); // Pullover
+    insertTemplateEx.run(2, 5, 1, 3); // Wide Dumbell Row
+    insertTemplateEx.run(2, 6, 2, 3); // Close Dumbell row
+    insertTemplateEx.run(2, 7, 3, 3); // Shrugs
 
     // Legs template (Template 3)
-    insertTemplateEx.run(3, 11, 1, 3); // Goblet Squat
-    insertTemplateEx.run(3, 12, 2, 3); // RDL
-    insertTemplateEx.run(3, 13, 3, 3); // Walking Lunges
-    insertTemplateEx.run(3, 14, 4, 3); // Calf Raises
+    insertTemplateEx.run(3, 8, 1, 3); // RDL
+    insertTemplateEx.run(3, 9, 2, 3); // Squats
   });
 
   transaction();
-  console.log('Database initialized and seeded successfully.');
+  console.log('Database seeded with STRICT 9-exercise whitelist.');
 }
