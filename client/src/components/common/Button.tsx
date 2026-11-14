@@ -20,7 +20,7 @@ export const Button: React.FC<ButtonProps> = ({
   const baseStyles = 'inline-flex items-center justify-center font-semibold rounded-xl transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-tracker-accent/50 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none cursor-pointer';
 
   const variants = {
-    primary: 'bg-tracker-accent hover:bg-tracker-accentHover text-tracker-bg shadow-md shadow-tracker-accent/20 font-bold',
+    primary: 'bg-tracker-accent hover:bg-tracker-accentHover text-white shadow-md shadow-tracker-accent/25 font-bold',
     secondary: 'bg-tracker-surfaceLight hover:bg-tracker-surfaceHover text-tracker-text border border-tracker-border',
     outline: 'border border-tracker-accent/60 text-tracker-accent hover:bg-tracker-accent/10',
     danger: 'bg-tracker-danger/20 hover:bg-tracker-danger/30 text-red-300 border border-tracker-danger/40',

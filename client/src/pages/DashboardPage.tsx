@@ -97,10 +97,10 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
 
   const getWorkoutTypeColor = (type: string) => {
     switch (type.toLowerCase()) {
-      case 'arms': return 'text-amber-300 bg-amber-950/40 border-amber-800/40';
-      case 'back': return 'text-sky-300 bg-sky-950/40 border-sky-800/40';
+      case 'arms': return 'text-rose-300 bg-rose-950/40 border-rose-800/40';
+      case 'back': return 'text-red-300 bg-red-950/40 border-red-800/40';
       case 'legs': return 'text-emerald-300 bg-emerald-950/40 border-emerald-800/40';
-      case 'rest': return 'text-purple-300 bg-purple-950/40 border-purple-800/40';
+      case 'rest': return 'text-zinc-300 bg-zinc-800/40 border-zinc-700/40';
       default: return 'text-tracker-textMuted bg-tracker-surfaceLight border-tracker-border';
     }
   };
@@ -108,7 +108,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   return (
     <div className="space-y-6 pb-12">
       {/* A. Welcome Banner Section */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-tracker-surface to-[#2e3922] border border-tracker-border p-6 sm:p-8 shadow-md">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-tracker-surface via-tracker-surface to-rose-950/25 border border-tracker-border p-6 sm:p-8 shadow-md">
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
             <div className="flex items-center gap-2">
@@ -239,7 +239,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                 `}
               >
                 {isToday && (
-                  <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-full bg-tracker-accent text-tracker-bg text-[10px] font-extrabold uppercase tracking-wider">
+                  <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-full bg-tracker-accent text-white text-[10px] font-extrabold uppercase tracking-wider shadow-sm">
                     Today
                   </span>
                 )}
@@ -299,29 +299,29 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                   <AreaChart data={recent_rep_trends} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                     <defs>
                       <linearGradient id="repGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#9A7E3B" stopOpacity={0.4} />
-                        <stop offset="95%" stopColor="#9A7E3B" stopOpacity={0.0} />
+                        <stop offset="5%" stopColor="#E11D48" stopOpacity={0.4} />
+                        <stop offset="95%" stopColor="#E11D48" stopOpacity={0.0} />
                       </linearGradient>
                     </defs>
                     <XAxis 
                       dataKey="date" 
-                      stroke="#7E7C58" 
-                      tick={{ fill: '#AAA87D', fontSize: 11 }}
+                      stroke="#71717A" 
+                      tick={{ fill: '#A1A1AA', fontSize: 11 }}
                       tickFormatter={(d) => d.slice(5)} // MM-DD
                     />
                     <YAxis 
-                      stroke="#7E7C58" 
-                      tick={{ fill: '#AAA87D', fontSize: 11 }} 
+                      stroke="#71717A" 
+                      tick={{ fill: '#A1A1AA', fontSize: 11 }} 
                     />
                     <Tooltip
                       contentStyle={{
-                        backgroundColor: '#323D25',
-                        borderColor: '#485736',
+                        backgroundColor: '#151518',
+                        borderColor: '#282830',
                         borderRadius: '12px',
-                        color: '#D2CF9A',
+                        color: '#F4F4F6',
                         boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
                       }}
-                      labelStyle={{ color: '#D2CF9A', fontWeight: 'bold' }}
+                      labelStyle={{ color: '#F4F4F6', fontWeight: 'bold' }}
                       formatter={(value: any, _name: any, item: any) => [
                         `${value} total reps (${item.payload.workout_type})`,
                         'Workout Volume',
@@ -330,7 +330,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                     <Area 
                       type="monotone" 
                       dataKey="total_reps" 
-                      stroke="#9A7E3B" 
+                      stroke="#E11D48" 
                       strokeWidth={3}
                       fillOpacity={1} 
                       fill="url(#repGradient)" 

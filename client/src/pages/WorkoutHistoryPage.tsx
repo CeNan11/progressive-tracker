@@ -88,7 +88,7 @@ export const WorkoutHistoryPage: React.FC<WorkoutHistoryPageProps> = ({ onStartW
                 className={`
                   px-3 py-1.5 rounded-xl text-xs font-semibold transition-all
                   ${selectedType === type
-                    ? 'bg-tracker-accent text-tracker-bg font-bold shadow-sm'
+                    ? 'bg-tracker-accent text-white font-bold shadow-sm'
                     : 'bg-tracker-bg text-tracker-textMuted hover:text-tracker-text border border-tracker-border/60'
                   }
                 `}
