@@ -20,6 +20,7 @@ import { Card } from '../components/common/Card';
 import { Button } from '../components/common/Button';
 import { StatCard } from '../components/common/StatCard';
 import { Badge } from '../components/common/Badge';
+import { useTheme } from '../context/ThemeContext';
 
 interface DashboardPageProps {
   onStartWorkout: (templateId?: number, workoutType?: string) => void;
@@ -39,6 +40,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   const [data, setData] = useState<DashboardSummary | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const { colors } = useTheme();
 
   const fetchDashboard = async () => {
     try {
@@ -108,7 +110,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   return (
     <div className="space-y-6 pb-12">
       {/* A. Welcome Banner Section */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-tracker-surface via-tracker-surface to-rose-950/25 border border-tracker-border p-6 sm:p-8 shadow-md">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-tracker-surface via-tracker-surface to-tracker-accent/15 border border-tracker-border p-6 sm:p-8 shadow-md">
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
             <div className="flex items-center gap-2">
@@ -299,29 +301,29 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                   <AreaChart data={recent_rep_trends} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                     <defs>
                       <linearGradient id="repGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#E11D48" stopOpacity={0.4} />
-                        <stop offset="95%" stopColor="#E11D48" stopOpacity={0.0} />
+                        <stop offset="5%" stopColor={colors.accent} stopOpacity={0.4} />
+                        <stop offset="95%" stopColor={colors.accent} stopOpacity={0.0} />
                       </linearGradient>
                     </defs>
                     <XAxis 
                       dataKey="date" 
-                      stroke="#71717A" 
-                      tick={{ fill: '#A1A1AA', fontSize: 11 }}
+                      stroke={colors.textDim} 
+                      tick={{ fill: colors.textMuted, fontSize: 11 }}
                       tickFormatter={(d) => d.slice(5)} // MM-DD
                     />
                     <YAxis 
-                      stroke="#71717A" 
-                      tick={{ fill: '#A1A1AA', fontSize: 11 }} 
+                      stroke={colors.textDim} 
+                      tick={{ fill: colors.textMuted, fontSize: 11 }} 
                     />
                     <Tooltip
                       contentStyle={{
-                        backgroundColor: '#151518',
-                        borderColor: '#282830',
+                        backgroundColor: colors.surface,
+                        borderColor: colors.border,
                         borderRadius: '12px',
-                        color: '#F4F4F6',
+                        color: colors.text,
                         boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
                       }}
-                      labelStyle={{ color: '#F4F4F6', fontWeight: 'bold' }}
+                      labelStyle={{ color: colors.text, fontWeight: 'bold' }}
                       formatter={(value: any, _name: any, item: any) => [
                         `${value} total reps (${item.payload.workout_type})`,
                         'Workout Volume',
@@ -330,7 +332,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                     <Area 
                       type="monotone" 
                       dataKey="total_reps" 
-                      stroke="#E11D48" 
+                      stroke={colors.accent} 
                       strokeWidth={3}
                       fillOpacity={1} 
                       fill="url(#repGradient)" 

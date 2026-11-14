@@ -71,21 +71,21 @@ export const Sidebar: React.FC<SidebarProps> = ({
               className={`
                 w-full flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-semibold transition-all
                 ${isActive 
-                  ? 'bg-tracker-accent text-white font-bold shadow-md shadow-tracker-accent/30' 
+                  ? 'bg-tracker-accent text-tracker-accentText font-bold shadow-md shadow-tracker-accent/20' 
                   : isStartWorkout && isWorkoutInProgress
-                    ? 'bg-rose-950/40 text-rose-300 border border-rose-600/40 hover:bg-rose-950/60'
+                    ? 'bg-tracker-accent/20 text-tracker-accentLight border border-tracker-accent/40'
                     : 'text-tracker-textMuted hover:text-tracker-text hover:bg-tracker-surfaceLight'
                 }
               `}
             >
               <div className="flex items-center gap-3">
-                <Icon className={`w-5 h-5 shrink-0 ${isActive ? 'text-white' : 'text-tracker-accent'}`} />
+                <Icon className={`w-5 h-5 shrink-0 ${isActive ? 'text-tracker-accentText' : 'text-tracker-accent'}`} />
                 <span>{item.label}</span>
               </div>
               {isStartWorkout && isWorkoutInProgress ? (
-                <span className="w-2 h-2 rounded-full bg-rose-400 animate-ping" />
+                <span className="w-2 h-2 rounded-full bg-tracker-accent animate-ping" />
               ) : isActive ? (
-                <ChevronRight className="w-4 h-4 text-white" />
+                <ChevronRight className="w-4 h-4 text-tracker-accentText" />
               ) : null}
             </button>
           );

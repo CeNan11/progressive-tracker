@@ -17,6 +17,8 @@ import { WorkoutTemplate } from '../types';
 import { Card } from '../components/common/Card';
 import { Button } from '../components/common/Button';
 import { Modal } from '../components/common/Modal';
+import { useTheme, AppTheme } from '../context/ThemeContext';
+import { Palette } from 'lucide-react';
 
 interface SettingsPageProps {
   onNavigateToSchedule: () => void;
@@ -29,6 +31,7 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({
   onNavigateToExercises,
   onDataReset,
 }) => {
+  const { theme, setTheme } = useTheme();
   const [templates, setTemplates] = useState<WorkoutTemplate[]>([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
@@ -110,6 +113,78 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({
           <span>{message.text}</span>
         </div>
       )}
+
+      {/* Visual Identity & Theme Appearance */}
+      <Card
+        title="Visual Theme & Color Palette"
+        subtitle="Switch between the Dark Olive-Green aesthetic or Crimson Red & Black style"
+      >
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {/* Dark Olive-Green (Master Prompt Default) */}
+          <button
+            onClick={() => setTheme('olive')}
+            className={`
+              p-4 rounded-xl border text-left transition-all relative
+              ${theme === 'olive' 
+                ? 'bg-tracker-surfaceLight border-tracker-accent shadow-md ring-1 ring-tracker-accent/40' 
+                : 'bg-tracker-bg border-tracker-border hover:border-tracker-border/80'
+              }
+            `}
+          >
+            <div className="flex items-center justify-between mb-2">
+              <span className="font-bold text-sm text-tracker-text">
+                🌿 Dark Olive-Green & Gold
+              </span>
+              {theme === 'olive' && (
+                <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-tracker-accent text-tracker-accentText">
+                  Active
+                </span>
+              )}
+            </div>
+            <p className="text-xs text-tracker-textMuted mb-3">
+              Official Master Prompt theme: Dark olive canvas with muted gold progressive accents.
+            </p>
+            <div className="flex items-center gap-2">
+              <span className="w-6 h-6 rounded-lg border border-black/30 shadow-inner" style={{ backgroundColor: '#28301C' }} title="#28301C Main background" />
+              <span className="w-6 h-6 rounded-lg border border-black/30 shadow-inner" style={{ backgroundColor: '#323D25' }} title="#323D25 Surface card" />
+              <span className="w-6 h-6 rounded-lg border border-black/30 shadow-inner" style={{ backgroundColor: '#9A7E3B' }} title="#9A7E3B Accent gold" />
+              <span className="w-6 h-6 rounded-lg border border-black/30 shadow-inner" style={{ backgroundColor: '#D2CF9A' }} title="#D2CF9A Text label" />
+            </div>
+          </button>
+
+          {/* Crimson Red & Black */}
+          <button
+            onClick={() => setTheme('red-black')}
+            className={`
+              p-4 rounded-xl border text-left transition-all relative
+              ${theme === 'red-black' 
+                ? 'bg-tracker-surfaceLight border-tracker-accent shadow-md ring-1 ring-tracker-accent/40' 
+                : 'bg-tracker-bg border-tracker-border hover:border-tracker-border/80'
+              }
+            `}
+          >
+            <div className="flex items-center justify-between mb-2">
+              <span className="font-bold text-sm text-tracker-text">
+                🔴 Crimson Red & Black
+              </span>
+              {theme === 'red-black' && (
+                <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-tracker-accent text-tracker-accentText">
+                  Active
+                </span>
+              )}
+            </div>
+            <p className="text-xs text-tracker-textMuted mb-3">
+              Athletic performance theme: Pitch-black obsidian with energetic crimson red highlights.
+            </p>
+            <div className="flex items-center gap-2">
+              <span className="w-6 h-6 rounded-lg border border-white/20 shadow-inner" style={{ backgroundColor: '#0C0C0E' }} title="#0C0C0E Main background" />
+              <span className="w-6 h-6 rounded-lg border border-white/20 shadow-inner" style={{ backgroundColor: '#151518' }} title="#151518 Surface card" />
+              <span className="w-6 h-6 rounded-lg border border-white/20 shadow-inner" style={{ backgroundColor: '#E11D48' }} title="#E11D48 Crimson red" />
+              <span className="w-6 h-6 rounded-lg border border-white/20 shadow-inner" style={{ backgroundColor: '#F4F4F6' }} title="#F4F4F6 Text label" />
+            </div>
+          </button>
+        </div>
+      </Card>
 
       {/* Routine & Exercise Shortcuts */}
       <Card

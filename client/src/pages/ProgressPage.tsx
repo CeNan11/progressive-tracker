@@ -27,12 +27,14 @@ import { Exercise, ExerciseStats } from '../types';
 import { Card } from '../components/common/Card';
 import { Button } from '../components/common/Button';
 import { Badge } from '../components/common/Badge';
+import { useTheme } from '../context/ThemeContext';
 
 interface ProgressPageProps {
   initialExerciseId?: number;
 }
 
 export const ProgressPage: React.FC<ProgressPageProps> = ({ initialExerciseId }) => {
+  const { colors } = useTheme();
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [selectedExerciseId, setSelectedExerciseId] = useState<number | null>(initialExerciseId || null);
   const [stats, setStats] = useState<ExerciseStats | null>(null);
@@ -229,26 +231,26 @@ export const ProgressPage: React.FC<ProgressPageProps> = ({ initialExerciseId })
                   <AreaChart data={stats.history} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                     <defs>
                       <linearGradient id="progressGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#E11D48" stopOpacity={0.4} />
-                        <stop offset="95%" stopColor="#E11D48" stopOpacity={0.0} />
+                        <stop offset="5%" stopColor={colors.accent} stopOpacity={0.4} />
+                        <stop offset="95%" stopColor={colors.accent} stopOpacity={0.0} />
                       </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#282830" vertical={false} />
+                    <CartesianGrid strokeDasharray="3 3" stroke={colors.border} vertical={false} />
                     <XAxis 
                       dataKey="date" 
-                      stroke="#71717A" 
-                      tick={{ fill: '#A1A1AA', fontSize: 11 }}
+                      stroke={colors.textDim} 
+                      tick={{ fill: colors.textMuted, fontSize: 11 }}
                     />
                     <YAxis 
-                      stroke="#71717A" 
-                      tick={{ fill: '#A1A1AA', fontSize: 11 }} 
+                      stroke={colors.textDim} 
+                      tick={{ fill: colors.textMuted, fontSize: 11 }} 
                     />
                     <Tooltip
                       contentStyle={{
-                        backgroundColor: '#151518',
-                        borderColor: '#282830',
+                        backgroundColor: colors.surface,
+                        borderColor: colors.border,
                         borderRadius: '12px',
-                        color: '#F4F4F6',
+                        color: colors.text,
                         boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
                       }}
                       formatter={(val: any, _name: any, item: any) => [
@@ -260,7 +262,7 @@ export const ProgressPage: React.FC<ProgressPageProps> = ({ initialExerciseId })
                     <Area 
                       type="monotone" 
                       dataKey="total_reps" 
-                      stroke="#E11D48" 
+                      stroke={colors.accent} 
                       strokeWidth={3}
                       fillOpacity={1} 
                       fill="url(#progressGrad)" 
